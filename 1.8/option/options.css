@@ -1,0 +1,24 @@
+body {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  margin: 1em;
+}
+
+label > span {
+  display: block;
+}
+
+label > input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#contents div > button.update {
+  padding: 0;
+  font-weight: bold;
+  font-size: 10px;
+}
