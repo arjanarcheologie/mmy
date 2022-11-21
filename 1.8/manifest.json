@@ -1,13 +1,13 @@
 {
     "manifest_version": 2,
-    "name": "Move messages and yourself1.8",
+    "name": "Move messages and yourself",
     "description": "Basic message move and folder display extension using key shortcuts. Change the shortcuts under the 'Manage Extension Shortcuts'",
     "version": "1.8",
     "author": "agb",
     "applications": {
         "gecko": {
 	    "id": "{8f168a36-1dc7-11ea-9233-f290ba9c1df4}",
-            "strict_min_version": "78.0"
+            "strict_min_version": "68.0"
         }
     },
    "icons": {
@@ -28,14 +28,16 @@
 	   "move-msg": {
     		"suggested_key": {
       			"default": "Ctrl+Shift+Z",
-      			"linux": "Ctrl+Shift+Z"
+      			"linux": "Ctrl+Shift+Z",
+      			"windows": "Ctrl+Shift+Z"
     		},
     		"description": "move messages to chosen folder"
   		},
 	   "fldr-jump": {
     		"suggested_key": {
       			"default": "Ctrl+Shift+X",
-      			"linux": "Ctrl+Shift+X"
+      			"linux": "Ctrl+Shift+X",
+      			"windows": "Ctrl+Shift+X"
     		},
     		"description": "display chosen folder"
   		},
@@ -46,7 +48,6 @@
     		},
     		"description": "move messages to and display chosen folder"
   		}
-
     },
     "background": {
         "scripts": ["scripts/background.js"]
