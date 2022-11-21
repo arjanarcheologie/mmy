@@ -8,6 +8,7 @@ messenger.commands.onCommand.addListener((command) => {
     if (command === "move-msg") {
         moveMessage = 0; // move message
     } else if ( command == "fldr-jump" ) {
+        browser.browserAction.setIcon({path: "icons/to_folder.svg"});
         moveMessage = 1; // display folder
     }
     messenger.browserAction.setTitle( { title: command} );

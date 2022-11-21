@@ -10,9 +10,18 @@
             "strict_min_version": "78.0"
         }
     },
+   "icons": {
+      "16": "icons/move_to_inbox.svg",
+      "32": "icons/move_to_inbox.svg",
+      "64": "icons/move_to_inbox.svg"
+   },
     "browser_action": {
         "default_popup": "popup.html",
-        "default_title": "move-msg"
+        "default_title": "move-msg",
+      "default_icon": {
+        "16": "icons/move_to_inbox.svg",
+        "32": "icons/move_to_inbox.svg"
+      }
     },
     "permissions": [ "storage", "messagesMove", "accountsRead", "accountsFolders", "messagesRead" ],
     "commands": {
