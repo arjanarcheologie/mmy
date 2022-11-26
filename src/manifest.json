@@ -2,7 +2,7 @@
    "manifest_version": 2,
    "name": "Move messages and yourself",
    "description": "Basic message move and folder display extension using key shortcuts. Change the shortcuts under the 'Manage Extension Shortcuts'",
-   "version": "1.8",
+   "version": "1.9",
    "author": "agb",
    "applications": {
       "gecko": {
