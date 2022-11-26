@@ -1,45 +1,68 @@
 {
-    "manifest_version": 2,
-    "name": "Move messages and yourself1.8",
-    "description": "Basic message move and folder display extension using key shortcuts. Change the shortcuts under the 'Manage Extension Shortcuts'",
-    "version": "1.8",
-    "author": "agb",
-    "applications": {
-        "gecko": {
-	    "id": "{8f168a36-1dc7-11ea-9233-f290ba9c1df4}",
-            "strict_min_version": "78.0"
-        }
-    },
-    "browser_action": {
-        "default_popup": "popup.html",
-        "default_title": "move-msg"
-    },
-    "permissions": [ "storage", "messagesMove", "accountsRead", "accountsFolders", "messagesRead" ],
-    "commands": {
-	   "move-msg": {
-    		"suggested_key": {
-      			"default": "Ctrl+Shift+Z",
-      			"linux": "Ctrl+Shift+Z"
-    		},
-    		"description": "move messages to chosen folder"
-  		},
-	   "fldr-jump": {
-    		"suggested_key": {
-      			"default": "Ctrl+Shift+X",
-      			"linux": "Ctrl+Shift+X"
-    		},
-    		"description": "display chosen folder"
-  		},
-	   "move-jump": {
-    		"suggested_key": {
-      			"default": "Ctrl+Shift+A",
-      			"linux": "Ctrl+Shift+A"
-    		},
-    		"description": "move messages to and display chosen folder"
-  		}
-
-    },
-    "background": {
-        "scripts": ["scripts/background.js"]
-    }
+   "manifest_version": 2,
+   "name": "Move messages and yourself",
+   "description": "Basic message move and folder display extension using key shortcuts. Change the shortcuts under the 'Manage Extension Shortcuts'",
+   "version": "1.8",
+   "author": "agb",
+   "applications": {
+      "gecko": {
+         "id": "{8f168a36-1dc7-11ea-9233-f290ba9c1df4}",
+         "strict_min_version": "68.0"
+      }
+   },
+   "icons": {
+      "16": "icons/move_to_inbox.svg",
+      "32": "icons/move_to_inbox.svg",
+      "64": "icons/move_to_inbox.svg"
+   },
+   "browser_action": {
+      "default_popup": "popup.html",
+      "default_title": "move-msg",
+      "default_icon": {
+         "16": "icons/move_to_inbox.svg",
+         "32": "icons/move_to_inbox.svg"
+      }
+   },
+   "permissions": [
+      "storage",
+      "messagesMove",
+      "accountsRead",
+      "accountsFolders",
+      "messagesRead"
+   ],
+   "commands": {
+      "move-msg": {
+         "suggested_key": {
+            "default": "Ctrl+Shift+Z",
+            "linux": "Ctrl+Shift+Z",
+            "windows": "Ctrl+Shift+Z"
+         },
+         "description": "move messages to chosen folder"
+      },
+      "fldr-jump": {
+         "suggested_key": {
+            "default": "Ctrl+Shift+X",
+            "linux": "Ctrl+Shift+X",
+            "windows": "Ctrl+Shift+X"
+         },
+         "description": "display chosen folder"
+      },
+      "move-jump": {
+         "suggested_key": {
+            "default": "Ctrl+Shift+A",
+            "linux": "Ctrl+Shift+A"
+         },
+         "description": "move messages to and display chosen folder"
+      }
+   },
+   "background": {
+      "scripts": [
+         "scripts/background.js"
+      ]
+   },
+   "options_ui": {
+      "page": "options.html",
+      "browser_style": false
+      "__browser_style_commnet__": "'true' gives NS_ERROR_FILE_NOT_FOUND"
+   }
 }
