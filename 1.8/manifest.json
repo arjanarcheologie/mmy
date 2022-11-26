@@ -60,9 +60,5 @@
          "scripts/background.js"
       ]
    },
-   "options_ui": {
-      "page": "options.html",
-      "browser_style": false
-      "__browser_style_commnet__": "'true' gives NS_ERROR_FILE_NOT_FOUND"
-   }
+   
 }
