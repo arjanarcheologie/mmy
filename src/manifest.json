@@ -50,7 +50,8 @@
       "move-jump": {
          "suggested_key": {
             "default": "Ctrl+Shift+A",
-            "linux": "Ctrl+Shift+A"
+            "linux": "Ctrl+Shift+A",
+            "windows": "Ctrl+Shift+A"
          },
          "description": "move messages to and display chosen folder"
       }
