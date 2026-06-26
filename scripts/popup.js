@@ -14,7 +14,7 @@ console.log('start popup')
 
 //browser.runtime.sendMessage( { 'type': 'message', 'content' : 'hallo dit is content script' })
 
-var gettingTitle = messenger.browserAction.getTitle({});
+var gettingTitle = messenger.action.getTitle({});
 
 gettingTitle.then(function (title) {
    action = title;
@@ -57,35 +57,40 @@ async function fireMoveAction(destFolder, messageList) {
          historyArray.shift();
       }
    }
-   await messenger.storage.local.set({
+
+   messenger.storage.local.set({
       history: historyArray
    }).then({});
+	
    if (action == ACTION_MOVE || action == ACTION_MOVEJUMP) {
-      browser.runtime.sendMessage({
+      await browser.runtime.sendMessage({
          'type': 'move',
          'destFolder': destFolder,
          'messages': messageList.messages
       })
    }
    if (action == ACTION_JUMP || action == ACTION_MOVEJUMP) {
-      browser.runtime.sendMessage({
+      await browser.runtime.sendMessage({
          'type': 'show',
          'destFolder': destFolder
       })
    }
    console.log('END move or jump action')
-   window.close();
+   //small timeout, to prevent rare condition during debugging (Error writing response to: listTabs Actor.js:247:21....)
+   setTimeout(() => window.close(), 50);
 }
 
 /**
  * folder -> MailFolder 
  * returns: array of subfolders from nested objects, or return only this object if no subfolders
  */
+var parentFoldersHM = new Map();
 function getSubFolders(folder) {
    let folders = []
    folders.push(folder)
    if (folder.hasOwnProperty('subFolders')) {
       for (let i = 0; i < folder.subFolders.length; i++) {
+      	 parentFoldersHM.set(folder.subFolders[i].path, folder);
          folders = folders.concat(getSubFolders(folder.subFolders[i]))
       }
       return folders
@@ -96,17 +101,29 @@ function getSubFolders(folder) {
 
 /** Initialize folder list
  */
-messenger.accounts.list().then(accounts => {
+messenger.accounts.list(true ).then(accounts => {
    /** get list of all folders in all accounts, save it in global var
     */
    console.log("get all folders")
    numberOfAccounts = accounts.length;
+   const accountMap = new Map();
+   for (const account of accounts) {
+      accountMap.set(account.id, account.name);
+   }
+   
+   parentFoldersHM = new Map();
    for (i = 0; i < accounts.length; i++) {
       console.log("get all folders from account" + i)
       let account = accounts[i]
-      for (j = 0; j < account.folders.length; j++) {
-         let folder = account.folders[j]
-         mailFolders = mailFolders.concat(getSubFolders(folder))
+      let subFolders = account.rootFolder.subFolders
+      for (j = 0; j < subFolders.length; j++) {
+         let folder = subFolders[j]
+         let folders = getSubFolders(folder)
+         for (const f of folders) {
+            f.accountName = accountMap.get(f.accountId);
+            if (j<10){ console.log(f.accountId);}
+         }
+         mailFolders = mailFolders.concat(folders)
       }
    }
    mailFolders.sort(compareFolders);
@@ -191,10 +208,16 @@ function makeFolderList() {
       foldersToShow = mailFolders;
    }
    for (j = 0; j < foldersToShow.length; j++) {
-      let folderName = foldersToShow[j].path;
-      if (folderName.toLowerCase().indexOf(filter) == -1) {
+      
+     // var parentsPromise = messenger.folders.getParentFolders(foldersToShow[j]); //.then( folders => console.log(folders ));
+    //  parentsPromise.then( folders => {
+      		//folderName = folders[0].name + "/" + folderName  
+     // })
+      if (foldersToShow[j].path.toLowerCase().indexOf(filter) == -1) {
          continue;
       }
+      var folderName = foldersToShow[j].name;
+      var folderPath = foldersToShow[j].path;
       var listItem = document.createElement('li');
       if (k == selectedRow) {
          listItem.classList.add("selected");
@@ -202,8 +225,18 @@ function makeFolderList() {
       listItem.setAttribute("id", k);
       selectedMailFolders.push(foldersToShow[j]);
       listItem.addEventListener("click", getSelectedFolder);
+      
+      let childPath = folderPath;
+      while ( parentFoldersHM.get( childPath) !== undefined ) {
+      		let parentFolder = parentFoldersHM.get( childPath);
+      		folderName =  parentFolder.name + '/' + folderName;
+      		childPath = parentFolder.path;
+      }
+      if (folderName.length > 100) {
+      	folderName = "..." + folderName.slice(-100);
+      }
       if (numberOfAccounts > 1) {
-         folderName = "[" + foldersToShow[j].accountId + "]" + folderName;
+         folderName = "[" + foldersToShow[j].accountName + "]" + folderName;
       }
       var label = document.createTextNode(folderName);
       listItem.appendChild(label);
@@ -229,3 +262,4 @@ function getSelectedFolder(event) {
    var id = event.target.attributes.id.value;
    fireMoveAction(selectedMailFolders[id], messageList);
 }
+
