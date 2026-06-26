@@ -1,13 +1,13 @@
 {
-   "manifest_version": 2,
+   "manifest_version": 3,
    "name": "Move messages and yourself",
    "description": "Basic message move and folder display extension using key shortcuts. Change the shortcuts under the 'Manage Extension Shortcuts'",
-   "version": "1.9",
+   "version": "1.14",
    "author": "agb",
-   "applications": {
+   "browser_specific_settings": {
       "gecko": {
          "id": "{8f168a36-1dc7-11ea-9233-f290ba9c1df4}",
-         "strict_min_version": "68.0"
+         "strict_min_version": "128.0"
       }
    },
    "icons": {
@@ -15,7 +15,7 @@
       "32": "icons/move_to_inbox.svg",
       "64": "icons/move_to_inbox.svg"
    },
-   "browser_action": {
+   "action": {
       "default_popup": "popup.html",
       "default_title": "move-msg",
       "default_icon": {
