@@ -11,7 +11,7 @@ Defaults:
 * Ctrl+Shift+X: jump to folder
 * Ctrl+Shift+A: move a message and jump to the same folder
 
-These shortcut keys can be changed using the "Manage Extension Shortcuts" panel in Thunderbird which can be accessed via the Tools menu, choose "Add-ons and Themes", in this panel click on the wheel to the right. The popup then shows the option "Manage Extension Shortcuts".
+These shortcut keys can be changed using the gear menu under Tools - Add-ons, then click “Manage add-on shortcuts”.
 
 Please feel free to use the code, change it, or to submit bux fixes. 
 
